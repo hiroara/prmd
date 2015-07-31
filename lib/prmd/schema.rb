@@ -146,7 +146,7 @@ module Prmd
           example[key] = schema_value_example(value)
         end
         example
-      elsif dff_schema.key?('items')
+      elsif dff_schema.key?('items') || dff_schema.key?('anyOf')
         schema_value_example(dff_schema)
       end
     end

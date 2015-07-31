@@ -37,4 +37,18 @@ class SchemaTest < Minitest::Test
     user_id = user_input_schema['definitions']['user']['definitions']['id']
     assert_equal(value, { 'override' => true }.merge(user_id))
   end
+
+  def test_schema_example_for_items
+    example = user_input_schema.schema_example(
+      'type' => 'array',
+      'items' => {
+        'anyOf' => [
+          { '$ref' => '#/definitions/user/definitions/id' },
+          { '$ref' => '#/definitions/user/definitions/created_at' }
+        ]
+      }
+    )
+    user_id = user_input_schema['definitions']['user']['definitions']['id']['example']
+    assert_equal(example, [user_id])
+  end
 end
